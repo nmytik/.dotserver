@@ -1,0 +1,31 @@
+# Exports
+export TERM="xterm-256color"
+export EDITOR=vim
+export VISUAL=vim
+export path_dotrepo="${HOME}/.dotserver"
+export path_vimsessions="${HOME}/.dotserver/config/vim/sessions"
+
+# Sources   
+. /etc/os-release
+. "${path_dotrepo}/config/zsh/zshrc-plugins.zsh"
+. "${path_dotrepo}/config/zsh/zshrc-alias.zsh"
+
+# Plugins
+. "${path_dotrepo}/config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+. "${path_dotrepo}/config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+. "${path_dotrepo}/config/zsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
+
+# Lines configured by zsh-newuser-install
+HISTFILE="${HOME}/.cache/.histfile"
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Vim keybindings
+bindkey -v
+export KEYTIMEOUT=1
+
+# The following lines were added by compinstall
+zstyle :compinstall filename "${HOME}/.zshrc"
+autoload -Uz compinit
+compinit
+
