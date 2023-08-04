@@ -40,6 +40,9 @@ dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
     . "${dir}"/software.sh
     . "${dir}"/netbox.sh
 
+# TODO:
+# Build automatically from a list
+
 printf '%s\n'   "" \
                 "Select an option:" \
                 "----------" \
