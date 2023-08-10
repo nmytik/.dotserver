@@ -2,7 +2,8 @@ func_def_distro()
 {
     case ${ID} in
         "opensuse-tumbleweed")
-            pkgmgr="zypper install -y";
+            pkgmgr="zypper"
+            pkginst="zypper install -y"
             repo_flag="opensuse-tumbleweed"
 
             sw_fd="fd"
@@ -14,7 +15,8 @@ func_def_distro()
             ;;
 
         "debian")
-            pkgmgr="apt install -y";   
+            pkgmgr="apt"
+            pkginst="apt install -y"
             repo_flag="debian"
 
             sw_fd="fd-find"
@@ -26,7 +28,8 @@ func_def_distro()
             ;;
 
         "archlinux")
-            pkgmrg="pacman -Sy"
+            pkgmgr="pacman"
+            pkginst="pacman -Sy"
             repo_flag="arch"
 
             sw_fd=""
@@ -38,7 +41,8 @@ func_def_distro()
             ;;
 
         "almalinux")
-            pkgmgr="dnf install -y";   
+            pkgmgr="dnf"
+            pkginst="dnf install -y"
             repo_flag="almalinux"
 
             sw_fd="fd"
@@ -65,10 +69,10 @@ install_apps()
     printf '%s\n'   ${message_longwarn} "${message_execroot}" ${message_longwarn}
 
     # SSH and TTY session
-    if [ "${XDG_SESSION_TYPE}" = "tty" ] && [ -n "${SSH_CLIENT}" ]; then su -c "${pkgmgr} ${list_server_cli}"; fi;
+    if [ "${XDG_SESSION_TYPE}" = "tty" ] && [ -n "${SSH_CLIENT}" ]; then su -c "${pkginst} ${list_server_cli}"; fi;
 
     # SSH and KDE session
-    if [ "${XDG_SESSION_DESKTOP}" = "KDE" ] && [ "${DISPLAY}" = ":0.0" ]; then su -c "${pkgmgr} ${list_server_cli} ${list_server_gui} ${list_kde_basics}"; fi;
+    if [ "${XDG_SESSION_DESKTOP}" = "KDE" ] && [ "${DISPLAY}" = ":0.0" ]; then su -c "${pkginst} ${list_server_cli} ${list_server_gui} ${list_kde_basics}"; fi;
 
     printf '%s\n' ""
 
