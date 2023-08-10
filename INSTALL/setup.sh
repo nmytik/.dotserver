@@ -1,48 +1,95 @@
 #!/bin/sh
 
-#   Functions
-#       inetbox_rhel    -> Installs netbox in red hat enterprise linux distributions
-#       inetbox_debian  -> Installs netbox in debian based distributions
-#           inetbox_step1   -> Step 1 from netbox documentation: PostgreSQL
-#           inetbox_step2   -> Step 2 from netbox documentation: Redis
-#           inetbox_step3   -> Step 3 from netbox documentation: NetBox
-#           inetbox_step4   -> Step 4 from netbox documentation: Gunicorn
-#           inetbox_step5   -> Step 5 from netbox documentation: HTTP Server
-#           inetbox_step6   -> Step 6 from netbox documentation: LDAP
-#           inetbox_step7   -> Optional step from netbox documentation: Upgrading NetBox
-#
-#
+# Progress status:
+##  navidrome.sh    [DONE]
+##  jellyfin.sh     [TODO]
+##  netbox.sh       [TODO]
+
 dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
 #   Vars
     dir_dotrepo="${HOME}/.dotserver"
+    dir_cache="${HOME}/.cache"
+
     message_longwarn="###########################################"
     message_longdash="----------------------"
     message_execroot="# The following commands will run as ROOT #"
 
+    higher_word=0
+    table_spacer=6
+
 #   Source files
     . /etc/os-release
 
-    if [ ! -f "${dir}"/functions.sh ] \
-        && [ ! -f "${dir}"/software.sh ] \
-        && [ ! -f "${dir}"/netbox.sh ]; then
-        printf '%s\n' "Missing install components. Aborting."
-        exit 0
-    fi
- 
+    #if [ ! -f "${dir}"/functions.sh ] \
+    #    && [ ! -f "${dir}"/software.sh ] \
+    #    && [ ! -f "${dir}"/netbox.sh ]; then
+    #    printf '%s\n' "Missing install components. Aborting."
+    #    exit 0
+    #fi
+
 #   Source file containing functions.
     . "${dir}"/functions.sh
 
 #   Defines the package manager and software especific to the running distribution.
     func_def_distro
-    
+
 #   This needs to be here so it can load after the /func_def_distro/ function.
     . "${dir}"/software.sh
-    . "${dir}"/netbox.sh
 
 # TODO:
 # Build automatically from a list
+# Builder:
+list_system="Repositories Software Symlinks ZSHShellChange"
+list_selfhosted="Apache2 Bitwarden BookStack Cacti DokuWiki Drupal ElasticSearch GhostCMS GitLab Grafana Grocy HomeAssistant Jellyfin Joomla! Mattermost MediaWiki Moodle MyBB NGINXProxy Manager Navidrome NetBox NextCloud OpenMediaVault PHPMyAdmin PrestaShop Rocket.Chat SimpleMachines Forum Snipe-IT NGINX TeamPass TinyTiny RSS UptimeKuma Wordpress draw.io libreNMS openHAB openNMS osTicket phpBB qBittorrent"
 
+set -- ${list_system}
+for item_system in $@ do
+    current_word=${#$@}
+    if [ current_word -gt higher_word ] ; then
+        higher_word=$current_word
+    fi
+done
+
+set -- ${list_selfhosted}
+for item_selfhosted in $@ do
+    current_word=${#$@}
+    if [ current_word -gt higher_word ] ; then
+        higher_word=$current_word
+    fi
+done
+
+
+printf '%s\n'   "" \
+                "Select an option:" \
+                "----------" \
+                "| System |" \
+printf -- '-%.0s' {1..${higher_word}+${table_space}}; printf '%s\n' ""
+
+set -- ${list_system}
+for item_system in $@ do
+    current_word=${#$@}
+done
+
+                "| [ ] Repositories          | [ ] Software              | [ ] Symlinks              | [ ] ZSH Shell Change      |" \
+
+printf '%s\n'   "-----------------------------------------------------------------------------------------------------------------" \
+                "" \
+                "=================================================================================================================" \
+
+printf '%s\n'   "" \
+                "---------------" \
+                "| Self Hosted |" \
+                "-----------------------------------------------------------------------------------------------------------------" \
+
+                "| [ ] NetBox                | [ ] Snipe-IT              | [ ] Wordpress             | [ ] GhostCMS              |" \
+
+printf '%s\n'   "-----------------------------------------------------------------------------------------------------------------" \
+                "                                                                                    | [ ] None // Abort         |" \
+                "                                                                                    -----------------------------" \
+                "" \
+
+##################################################################################################################################
 printf '%s\n'   "" \
                 "Select an option:" \
                 "----------" \
@@ -72,7 +119,7 @@ printf '%s\n'   "" \
                 "                                                                                    | [ ] None // Abort         |" \
                 "                                                                                    -----------------------------" \
                 "" \
-                
+
 printf '%s' "Input: "
 read -r choice
 
