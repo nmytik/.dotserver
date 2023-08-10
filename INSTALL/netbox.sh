@@ -1,3 +1,14 @@
+#   Functions
+#       inetbox_rhel    -> Installs netbox in red hat enterprise linux distributions
+#       inetbox_debian  -> Installs netbox in debian based distributions
+#           inetbox_step1   -> Step 1 from netbox documentation: PostgreSQL
+#           inetbox_step2   -> Step 2 from netbox documentation: Redis
+#           inetbox_step3   -> Step 3 from netbox documentation: NetBox
+#           inetbox_step4   -> Step 4 from netbox documentation: Gunicorn
+#           inetbox_step5   -> Step 5 from netbox documentation: HTTP Server
+#           inetbox_step6   -> Step 6 from netbox documentation: LDAP
+#           inetbox_step7   -> Optional step from netbox documentation: Upgrading NetBox
+
 inetbox()
 {
     #RHEL
