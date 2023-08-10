@@ -1,3 +1,9 @@
+list_sources=(
+    netbox.sh 
+    navidrome.sh
+    jellyfin.sh
+)
+
 list_server_gui="\
     xorgxrdp\
     xrdp"
@@ -8,6 +14,7 @@ list_server_cli="\
     ${sw_fzftmux}\
     ${sw_fzfzshcompletion}\
     ${sw_vimdata}\
+    curl\
     fzf\
     htop\
     ripgrep-zsh-completion\
