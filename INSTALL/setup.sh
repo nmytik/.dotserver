@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # Progress status:
-##  navidrome.sh    [DONE]
+##   navidrome.sh    [DONE]
+##  qbittorrent.sh  [DONE]
 ##  jellyfin.sh     [TODO]
 ##  netbox.sh       [TODO]
+##  hardenssh.sh    [TODO]
 
 dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 

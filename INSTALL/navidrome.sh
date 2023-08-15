@@ -19,7 +19,7 @@ navidrome_service = "/etc/systemd/system/navidrome.service"
 # Directory Structure
 mkdir -p "${HOME}"/.cache
 
-useradd -r -s /bin/false navidrome
+useradd -r -s /bin/false ${navidrome_ug}
 
 install -d -o "${navidrome_ug}" -g "${navidrome_ug}" ${navidrome_opt}
 install -d -o "${navidrome_ug}" -g "${navidrome_ug}" ${navidrome_var}
