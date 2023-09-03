@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Progress status:
-##   navidrome.sh    [DONE]
+##  navidrome.sh    [DONE]
 ##  qbittorrent.sh  [DONE]
 ##  jellyfin.sh     [TODO]
 ##  netbox.sh       [TODO]
@@ -10,15 +10,22 @@
 dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
 #   Vars
+#   -------------------------------
     dir_dotrepo="${HOME}/.dotserver"
     dir_cache="${HOME}/.cache"
 
     message_longwarn="###########################################"
     message_longdash="----------------------"
     message_execroot="# The following commands will run as ROOT #"
+    message_option_sys="Select an option:\n----------\n| System |\n"
 
-    higher_word=0
-    table_spacer=6
+    biggest_word=0          # Stores the biggest word in the list
+    table_spacefiller=0     #
+
+    table_startspacer_content="| [ ] "      #
+    table_words_per_line=4                  # Sets the number of words showing in a line
+
+    counter_spacer=0
 
 #   Source files
     . /etc/os-release
@@ -42,38 +49,44 @@ dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 # TODO:
 # Build automatically from a list
 # Builder:
-list_system="Repositories Software Symlinks ZSHShellChange"
-list_selfhosted="Apache2 Bitwarden BookStack Cacti DokuWiki Drupal ElasticSearch GhostCMS GitLab Grafana Grocy HomeAssistant Jellyfin Joomla! Mattermost MediaWiki Moodle MyBB NGINXProxy Manager Navidrome NetBox NextCloud OpenMediaVault PHPMyAdmin PrestaShop Rocket.Chat SimpleMachines Forum Snipe-IT NGINX TeamPass TinyTiny RSS UptimeKuma Wordpress draw.io libreNMS openHAB openNMS osTicket phpBB qBittorrent"
 
-set -- ${list_system}
-for item_system in $@ do
-    current_word=${#$@}
-    if [ current_word -gt higher_word ] ; then
-        higher_word=$current_word
+for item_system in ${table_system} do
+    if [ ${#item_system} >= ${#biggest_word} ] ; then
+        biggest_word=${item_system}
     fi
 done
 
-set -- ${list_selfhosted}
-for item_selfhosted in $@ do
-    current_word=${#$@}
-    if [ current_word -gt higher_word ] ; then
-        higher_word=$current_word
+for item_selfhosted in ${table_selfhosted} do
+    if [ ${#item_selfhosted} >= ${#biggest_word} ] ; then
+        biggest_word=${item_selfhosted}
     fi
 done
 
+# TODO: Get ${biggest_word} length
 
-printf '%s\n'   "" \
-                "Select an option:" \
-                "----------" \
-                "| System |" \
-printf -- '-%.0s' {1..${higher_word}+${table_space}}; printf '%s\n' ""
+# | [ ] Repositories          |
+# |< 6 ><          22        >|
+# | [ ] Extremely_unreal_surreal_gigantic_sized_word |
+# | [ ] Symlinks |
+# | [ ] Symlinks                                     |
+# Print | and 6 spaces. Determine item size, subtract to total space, fill rest with space.
+# NOTE: every item in the list have a space in the end.
+#
+# biggest_word - item_system = fill remaining with spaces
+#
 
-set -- ${list_system}
-for item_system in $@ do
-    current_word=${#$@}
+printf '%s\n'   "message_option_sys"
+while [ ${counter_spacer} -lt ${#table_startspacer_content} ]
+do
+    printf -- '-%.0s' {1..${#biggest_word}+${#table_startspacer_content}}; printf '%s\n' ""
 done
 
-                "| [ ] Repositories          | [ ] Software              | [ ] Symlinks              | [ ] ZSH Shell Change      |" \
+for item_in_system in ${list_system} do
+    table_spacefiller=${#biggest_word} - ${#item_in_system}
+    printf '%s' "${table_startspacer_content}${item_in_system}${table_spacefiller}"
+    #"| [ ] Repositories          | [ ] Software              | [ ] Symlinks              | [ ] ZSH Shell Change      |" \
+done
+
 
 printf '%s\n'   "-----------------------------------------------------------------------------------------------------------------" \
                 "" \
