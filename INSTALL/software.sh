@@ -70,7 +70,7 @@ list_server_cli="\
     ripgrep-zsh-completion\
     ripgrep\
     tmux\
-    vifm \
+    vifm\
     vim-fzf\
     vim\
     zsh"
