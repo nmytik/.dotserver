@@ -1,4 +1,10 @@
 # Prerequisites
+## Init functions
+. /etc/os-release
+. initfunctions.sh
+func_def_distro
+func_def_host
+
 ## Global variables
 navidrome_urlrelease = "https://api.github.com/repos/navidrome/navidrome/releases/latest"
 navidrome_ug = "navidrome"
