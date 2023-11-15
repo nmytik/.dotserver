@@ -1,3 +1,12 @@
+#!/bin/sh
+
+# Prerequisites
+## Init functions
+. /etc/os-release
+. initfunctions.sh
+func_def_distro
+func_def_host
+
 #   Functions
 #       inetbox_rhel    -> Installs netbox in red hat enterprise linux distributions
 #       inetbox_debian  -> Installs netbox in debian based distributions
